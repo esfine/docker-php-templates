@@ -1,0 +1,40 @@
+version: '3'
+services:
+  web:
+    image: nginx:1.22
+    ports:
+      - '8080:80'
+    depends_on:
+      - app
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - .:/var/www
+  app:
+    build: ./docker/php
+    volumes:
+      - .:/var/www
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: application
+      MYSQL_USER: app_manager
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/mysql:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5.2
+    environment:
+      - PMA_HOSTS=mysql
+      - PMA_USER=root
+      - PMA_PASSWORD=root
+    external_links:
+      - mysql:mysql
+    volumes:
+      - ./docker/phpmyadmin/sessions:/sessions
+    ports:
+      - "8888:80"

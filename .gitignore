@@ -1,0 +1,25 @@
+# Project
+
+
+
+# Docker
+docker/mysql
+docker/phpmyadmin
+
+# PHP
+/vendor
+
+# OS Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# OS macOS
+.DS_Store
+
+# Editor VSCode
+*.code-workspace
+
+# Editor PHPSrtorm
+.idea
